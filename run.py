@@ -33,15 +33,15 @@ class GameBoard():
             print("  ".join(row))
 
     def add_ship_to_grid(self, x, y):
-        if len(self.player.ships) >= self.num_of_ships:
-            print("Error: you Cannot add anymore ships to the board")
+        if len(self.player.ships) > self.num_of_ships:
+            print("Error: you cannot add anymore ships to the board")
         else:
             self.player.ships.append((x, y))
             if self.player.player_type == "user":
                 self.board_grid[x][y] = "$"
 
 
-def random_int_generator(board_size):
+def random_int(board_size):
     """
     a helper function that generates a random interger thats value
      ranges from 0 to the size of the board given.
@@ -57,13 +57,24 @@ player2 = Player("Computer", "computer")
 players_board = GameBoard(5, 4, player1)
 computers_board = GameBoard(5, 4, player2)
 
-# populate_ships_to_board
-players_board.add_ship_to_grid(random_int_generator(players_board.size), random_int_generator(players_board.size))
-players_board.add_ship_to_grid(random_int_generator(players_board.size), random_int_generator(players_board.size))
-players_board.add_ship_to_grid(random_int_generator(players_board.size), random_int_generator(players_board.size))
-players_board.add_ship_to_grid(random_int_generator(players_board.size), random_int_generator(players_board.size))
-#
-computers_board.add_ship_to_grid(1, 2)
+
+def populate_ships_to_board(users_board):
+    """
+    This function generates the random location of ships to the board. it takes the
+    players_board and computers_board as the arguments
+    """
+    num_of_ships = users_board.num_of_ships
+
+    for ship in range(0, num_of_ships):
+        ship = users_board.add_ship_to_grid(random_int(users_board.size), random_int(users_board.size))
+        while ship not in users_board.player.ships:
+            users_board.player.ships.append(ship)
+
+
+# find why there is a none object appearing in the list of ships
+
+populate_ships_to_board(players_board)
+populate_ships_to_board(computers_board)
 
 
 print()
@@ -76,4 +87,5 @@ print("-" * 40)
 computers_board.display_board()
 print()
 
+print(players_board.player.ships)
 print(computers_board.player.ships)
