@@ -32,11 +32,12 @@ class GameBoard():
         for row in self.board_grid:
             print("  ".join(row))
 
-    def add_ship_to_grid(self, x, y):
-        if len(self.player.ships) > self.num_of_ships:
-            print("Error: you cannot add anymore ships to the board")
-        else:
-            self.player.ships.append((x, y))
+    def display_ships(self, list):
+        # if len(self.player.ships) > self.num_of_ships:
+        #     print("Error: you cannot add anymore ships to the board")
+        # else:
+        for co_ord in self.player.ships:
+            x, y = co_ord
             if self.player.player_type == "user":
                 self.board_grid[x][y] = "$"
 
@@ -58,24 +59,31 @@ players_board = GameBoard(5, 4, player1)
 computers_board = GameBoard(5, 4, player2)
 
 
-def populate_ships_to_board(users_board):
+def add_ships_to_board(users_board):
     """
     This function generates the random location of ships to the board. it takes the
     players_board and computers_board as the arguments
     """
     num_of_ships = users_board.num_of_ships
+    ship_list = []
+    unique_coordinates = []
 
-    for ship in range(0, num_of_ships):
-        ship = users_board.add_ship_to_grid(random_int(users_board.size), random_int(users_board.size))
-        while ship not in users_board.player.ships:
-            users_board.player.ships.append(ship)
+    while len(unique_coordinates) < num_of_ships:
+        x = random_int(users_board.size)
+        y = random_int(users_board.size)
+        ship = (x, y)
+        # print(ship) # program checker print
+        ship_list.append(ship)
+        unique_coordinates = set(ship_list)
+        users_board.player.ships = unique_coordinates
+        users_board.display_ships(users_board.player.ships)
+
+    # print(ship_list)
+    # print(unique_coordinates)
 
 
-# find why there is a none object appearing in the list of ships
-
-populate_ships_to_board(players_board)
-populate_ships_to_board(computers_board)
-
+add_ships_to_board(players_board)
+add_ships_to_board(computers_board)
 
 print()
 print(f"{player1.player_name}'s Battleship Board")
@@ -89,3 +97,7 @@ print()
 
 print(players_board.player.ships)
 print(computers_board.player.ships)
+
+print((1,0) in players_board.player.ships)
+print((2,0) in players_board.player.ships)
+print((3,0) in players_board.player.ships)
