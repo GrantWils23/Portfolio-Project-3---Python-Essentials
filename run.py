@@ -45,9 +45,6 @@ class GameBoard():
             return "Miss"
 
     def display_ships(self):
-        # if len(self.player.ships) > self.num_of_ships:
-        #     print("Error: you cannot add anymore ships to the board")
-        # else:
         for co_ord in self.ships:
             x, y = co_ord
             if self.player_type == "user":
@@ -74,7 +71,6 @@ def add_ships_to_board(gameboard):
         x = random_number(gameboard.size)
         y = random_number(gameboard.size)
         ship = (x, y)
-        # print(ship) # program checker print
         ship_list.append(ship)
         unique_coordinates = set(ship_list)
         gameboard.ships = list(unique_coordinates)
@@ -96,12 +92,8 @@ def make_guess(gameboard, x, y):
     """
     prompt the user to make a guess that is stored in the player.guesses list
     """
-    if gameboard.player_type == "user":
-        gameboard.guess(x, y)
-    else:
-        x = random_number(gameboard.size)
-        y = random_number(gameboard.size)
-        gameboard.guess(x, y)
+    return gameboard.guess(x, y)
+
 
 
 def validate_input(gameboard, row_or_column):
@@ -118,23 +110,9 @@ def validate_input(gameboard, row_or_column):
 
 ##################################################################
 
-# def check_guess_list(x, y, gameboard):
-#     """
-#     Checks and compares the gameboard's guess list if the guess is already
-#     inside the list
-#     """
-#     try:
-#         coordinate = (x, y)
-#     if coordinate in gameboard.guesses:
-#         print("please select a co-ordinate that hasn't already been chosen")
-#         raise:
-            
-#     else:
-#         return x, y
-
 #################################################################
 
-def check_guess_in_range(gameboard):
+def validate_input_coordinates(gameboard):
     """
     Checks to validate if the given x and y coirdinates are
      in range of the boardsize.
@@ -145,7 +123,7 @@ def check_guess_in_range(gameboard):
             y = validate_input(gameboard, "Y co-ordinate")
             if (x, y) in gameboard.guesses:
                 raise CustomError
-            return make_guess(gameboard, x, y)
+            return (x, y)
         except IndexError:
             print(f" Index values provided are out of range, please select a numbers between 0 and {gameboard.size - 1}")
         except CustomError:
@@ -160,9 +138,44 @@ def playgame(players_board, computers_board):
      and calls the functions to make guesses in the game until there is a winner
      """
 
+    print(f"{players_board.player_name}. It is your turn to attack.")
+    print("please enter the coordinates you would like to strike:")
+    x, y = validate_input_coordinates(computers_board)
+    players_turn = make_guess(computers_board, x, y)
+    print()
+    print(f"Shot fired!, target {players_turn} at co-ordinates{(x, y)}")
+    print()
+
+    print(f"{computers_board.player_name}'s turn, the computer will now attack.")
+    rand_x = int(random_number(players_board.size))
+    rand_y = int(random_number(players_board.size))
+    computers_turn = make_guess(players_board, rand_x, rand_y)
+    print()
+    print(f"Shot fired!, target {computers_turn}")
+    print(computers_turn)
+    print()
+
+    print()
+    print(f"{players_board.player_name}'s Battleship Board")
+    print("-" * 40)
+    players_board.display_board()
+    print()
+    print(f"{computers_board.player_name}'s Battleship Board")
+    print("-" * 40)
+    computers_board.display_board()
+    print()
+
+
+
     print("please enter the coordinates you would like to strike")
-    check_guess_in_range(players_board)
-    check_guess_in_range(players_board)
+    x, y = validate_input_coordinates(computers_board)
+    make_guess(computers_board, x, y)
+
+
+
+
+
+  
     
         # players coordinates to be validated (if string, DONE!...  in range DONE! ... , and in guesses)
 
@@ -172,6 +185,7 @@ def playgame(players_board, computers_board):
     print("-" * 40)
     print()
     players_board.display_board()
+    print()
     print(f"{computers_board.player_name}'s Battleship Board")
     print("-" * 40)
     computers_board.display_board()
@@ -209,111 +223,3 @@ def start_game():
 
 start_game()
 
-#------------------------------------------------------------------------------------------------------------------
-
-# def validate_coordinate(boardsize, row_or_column):
-#     """
-#     Validate the co-ordinates given that they are not a string.
-#     """
-#     while True:
-#         try:
-#             num = input(f'Enter a number between 0 and {boardsize} for the {row_or_column}: \n')
-#             # if num >= boardsize:
-#                 # print(f" Index values provided are out of range, please select a number between 0 and {boardsize - 1}")
-#             print(f'Number is {num}')
-#             return int(num)
-#         except ValueError:
-#             print(f'{num} is not a number')
-#         # except IndexError:
-
-
-# def validate_guess(guessers_board, opponents_board):
-#     """
-#     Validate the co-ordinates given that they are not a string.
-#     Validate the guesses entered by the user playing, guesses need to be
-#     within the boardsize and can't guess a co-ordinate that has already been guessed.
-#     """
-#     while True:
-#         try:
-#             num1 = int(input(f'Enter a number between 0 and {opponents_board.size - 1} for the X co-ordinate: \n'))
-#             print(f'X co-ordinate selected is {num1}')
-#             num2 = int(input(f'Enter a number between 0 and {opponents_board.size - 1} for the Y co-ordinate: \n'))
-#             print(f'Y co-ordinate selected is {num2}')
-#             (num1, num2) in guessers_board.player.guesses
-#             print("please select a co-ordinate that hasn't already been chosen")
-#             return opponents_board.guess(num1, num2)
-
-#         except ValueError as error:
-#             e = str(error).split()
-#             print(f'{e[-1]} is not a number')
-#         except IndexError:
-#             print(f" Index values provided are out of range, please select a number between 0 and {opponents_board.size - 1}")
-        # except Exception as already_targeted:
-        #     print("please select a co-ordinate that hasn't already been chosen")
-
-        # guessers_board.player.guesses
-        # finally:
-        #     return opponents_board.guess(num1, num2)
-
-
-# def make_guess(guessers_board, opponents_board):
-#     """
-#     prompt the user to make a guess that is stored in the player.guesses list
-#     """
-#     if guessers_board.player.player_type == "user":
-#         print("please enter the coordinates you would like to strike")
-#         # validate_guess(guessers_board, opponents_board)
-#     else:
-#         while True:          # While false: check if (x, y) in guessers_board
-#             try:
-#                 x = int(random_int(guessers_board.size - 1))
-#                 y = int(random_int(guessers_board.size - 1))
-#                 coordinate = (x, y)
-#                 print(x, y)
-#                 coordinate not in guessers_board.player.guesses
-#             #     opponents_board.guess(coordinate) #*
-#             finally:
-#                 return opponents_board.guess(x, y)
-#     return
-
-
-#--------------------------------------------------------------------------------------------------------------------------------------
-
-
-#----------------------------------------------------------------------------
-# print()
-# print(f"{player1.player_name}'s Battleship Board")
-# print("-" * 40)
-# print()
-# players_board.display_board()
-# print(f"{player2.player_name}'s Battleship Board")
-# print("-" * 40)
-# computers_board.display_board()
-# print()
-#----------------------------------------------------------------------------
-
-# print(players_board.player.ships)
-# print(computers_board.player.ships)
-# print()
-# print((1, 0) in players_board.player.ships)
-# print((2, 0) in players_board.player.ships)
-# print((3, 0) in players_board.player.ships)
-# print()
-
-#----------------------------------------------------------------------------
-
-# code_checker_variable = make_guess(players_board, computers_board)
-# code_checker_variable = make_guess(computers_board, players_board)
-# print(code_checker_variable in computers_board.player.ships)
-
-#----------------------------------------------------------------------------
-
-# print()
-# print(f"{player1.player_name}'s Battleship Board")
-# print("-" * 40)
-# print()
-# players_board.display_board()
-# print(f"{player2.player_name}'s Battleship Board")
-# print("-" * 40)
-# computers_board.display_board()
-# print()
