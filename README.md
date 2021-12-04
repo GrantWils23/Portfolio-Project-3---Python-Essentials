@@ -133,7 +133,8 @@ To test my project, I have manually tested the project by doing the following:
 ### Solved Bugs
 
 <ul>
-    <li>........</li>
+    <li>I created a validation for checking if the guess made ca be found in the guesses but I didnt pass this validation into the code for the computers turn. This showed up that the
+    computer was hitting targets it has already shot and missed. resulting in an unbalanced and unfair game experience wereby the user can have a greater chance at winning then the computer</li>
     <li>........</li>
 </ul>
 

@@ -1,7 +1,6 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
-from os import sched_setscheduler, strerror
 import random
 
 scores = {"computer": 0}
@@ -12,7 +11,6 @@ class CustomError(Exception):
     This error is raised when the guesses list is being check against the
     new given guess coordinates
     """
-    pass
 
 
 class GameBoard():
@@ -95,7 +93,6 @@ def make_guess(gameboard, x, y):
     return gameboard.guess(x, y)
 
 
-
 def validate_input(gameboard, row_or_column):
     """
     Validate the input co-ordinate given to make sure that it is not a string.
@@ -112,26 +109,39 @@ def validate_input(gameboard, row_or_column):
 
 #################################################################
 
+
 def validate_input_coordinates(gameboard):
     """
     Checks to validate if the given x and y coirdinates are
-     in range of the boardsize.
+     in range of the boardsize. returns the called make guess function
+     and unpacks the x, y co-ordinates that were fed into the guess.
     """
     while True:
         try:
-            x = validate_input(gameboard, "X co-ordinate")
-            y = validate_input(gameboard, "Y co-ordinate")
-            if (x, y) in gameboard.guesses:
-                raise CustomError
+            if gameboard.player_type == "computer":
+                x = validate_input(gameboard, "X co-ordinate")
+                y = validate_input(gameboard, "Y co-ordinate")
+            else:
+                x = int(random_number(gameboard.size))
+                y = int(random_number(gameboard.size))
+                if (x, y) in gameboard.guesses:
+                    raise CustomError
             return make_guess(gameboard, x, y), x, y
         except IndexError:
             print(f" Index values provided are out of range, please select numbers between 0 and {gameboard.size - 1}")
         except CustomError:
-            print("please select a co-ordinate that hasn't already been chosen")
+            if gameboard.player_type == "user":
+                print("please select a co-ordinate that hasn't already been chosen")
+            else:
+                pass
 
 ################################################################
 
+
 def calculate_score(turn, gameboard):
+    """
+    calculates the score after feeding it the turn and the board as perameters
+    """
     if turn == "Hit":
         if gameboard.player_type == "user":
             scores[gameboard.player_name] += 1
@@ -141,6 +151,7 @@ def calculate_score(turn, gameboard):
             return scores
 
 ################################################################
+
 
 def playgame(players_board, computers_board):
     """
@@ -156,9 +167,10 @@ def playgame(players_board, computers_board):
         print(f"Shot fired!, target '{players_turn}' at co-ordinates{(x, y)}")
         print("-" * 65)
         print(f"It's now the {computers_board.player_name}'s turn to attack.")
-        rand_x = int(random_number(players_board.size))
-        rand_y = int(random_number(players_board.size))
-        computers_turn = make_guess(players_board, rand_x, rand_y)
+        # rand_x = int(random_number(players_board.size))
+        # rand_y = int(random_number(players_board.size))
+        computers_turn, x, y = validate_input_coordinates(players_board)
+        # computers_turn = make_guess(players_board, rand_x, rand_y)
         print(f"Shot fired!, target '{computers_turn}' at co-ordinates{(x, y)}")
         print()
 
@@ -181,9 +193,6 @@ def playgame(players_board, computers_board):
         print(f"Congratulations {players_board.player_name}! You won!")
     else:
         print("Unlucky, The computer beat you this time!")
-
-
-
 
 
 #------------------------------------------------------------------------------------------------------
@@ -214,22 +223,18 @@ def playgame(players_board, computers_board):
     # computers_board.display_board()
     # print()
 
-
     # calculate_score(players_turn, players_board)
     # calculate_score(computers_turn, computers_board)
     # print("The scores at the end of the round are:")
     # print(scores)
     # print()
 
-
 #--------------------------------------------------------------------------------------------------------------------------------------
-
 
 def start_game():
     """
     runs the game and instatiates all the variables required to run the game
     """
-
 
     board_size = 5
     num_of_ships = 4
@@ -238,7 +243,7 @@ def start_game():
     scores[players_name] = 0
     players_board = GameBoard(board_size, num_of_ships, player_type="user", player_name=players_name)
     computers_board = GameBoard(board_size, num_of_ships, player_type="computer", player_name="Computer")
-    
+
     print()
     print("*" * 40)
     print("Welcome to the BattleShips board!")
@@ -261,6 +266,7 @@ def start_game():
     print()
 
     playgame(players_board, computers_board)
+
 
 print()
 print("-" * 65)
