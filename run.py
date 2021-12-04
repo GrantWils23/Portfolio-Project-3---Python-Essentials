@@ -147,34 +147,43 @@ def playgame(players_board, computers_board):
      this function takes the player and the computer players as parameters
      and calls the functions to make guesses in the game until there is a winner
      """
+    while scores["computer"] or scores[players_board.player_name] <= 4:
+        print(f"{players_board.player_name}. It is your turn to attack!")
+        print("Prepare to enter the grid co-ordinates to strike.")
+        print("-" * 65)
+        players_turn, x, y = validate_input_coordinates(computers_board)
+        print("-" * 65)
+        print(f"Shot fired!, target '{players_turn}' at co-ordinates{(x, y)}")
+        print("-" * 65)
+        print(f"It's now the {computers_board.player_name}'s turn to attack.")
+        rand_x = int(random_number(players_board.size))
+        rand_y = int(random_number(players_board.size))
+        computers_turn = make_guess(players_board, rand_x, rand_y)
+        print(f"Shot fired!, target '{computers_turn}' at co-ordinates{(x, y)}")
+        print()
 
-    print(f"{players_board.player_name}. It is your turn to attack!")
-    print("Prepare to enter the grid co-ordinates to strike.")
-    print("-" * 65)
-    players_turn, x, y = validate_input_coordinates(computers_board)
-    print("-" * 65)
-    print(f"Shot fired!, target '{players_turn}' at co-ordinates{(x, y)}")
-    print("-" * 65)
-    print(f"It's now the {computers_board.player_name}'s turn to attack.")
-    rand_x = int(random_number(players_board.size))
-    rand_y = int(random_number(players_board.size))
-    computers_turn = make_guess(players_board, rand_x, rand_y)
-    print(f"Shot fired!, target '{computers_turn}' at co-ordinates{(x, y)}")
-    print()
+        print(f"{players_board.player_name}'s Battleship Board")
+        print("-" * 40)
+        players_board.display_board()
+        print(f"{computers_board.player_name}'s Battleship Board")
+        print("-" * 40)
+        computers_board.display_board()
+        print()
 
-    print(f"{players_board.player_name}'s Battleship Board")
-    print("-" * 40)
-    players_board.display_board()
-    print(f"{computers_board.player_name}'s Battleship Board")
-    print("-" * 40)
-    computers_board.display_board()
-    print()
+        calculate_score(players_turn, players_board)
+        calculate_score(computers_turn, computers_board)
+        print("The scores at the end of the round are:")
+        print(scores)
+        print()
+        if (scores[players_board.player_name] == 4) or (scores["computer"] == 4):
+            break
+    if scores[players_board.player_name] == 4:
+        print(f"Congratulations {players_board.player_name}! You won!")
+    else:
+        print("Unlucky, The computer beat you this time!")
 
-    calculate_score(players_turn, players_board)
-    calculate_score(computers_turn, computers_board)
-    print("The scores at the end of the round are:")
-    print(scores)
-    print()
+
+
 
 
 #------------------------------------------------------------------------------------------------------
