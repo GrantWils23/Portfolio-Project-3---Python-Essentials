@@ -119,8 +119,10 @@ def validate_input_coordinates(gameboard):
     while True:
         try:
             if gameboard.player_type == "computer":
-                x = validate_input(gameboard, "X co-ordinate")
-                y = validate_input(gameboard, "Y co-ordinate")
+                x = validate_input(gameboard, "row")
+                y = validate_input(gameboard, "column")
+                if (x, y) in gameboard.guesses:
+                    raise CustomError
             else:
                 x = int(random_number(gameboard.size))
                 y = int(random_number(gameboard.size))
@@ -130,17 +132,16 @@ def validate_input_coordinates(gameboard):
         except IndexError:
             print(f" Index values provided are out of range, please select numbers between 0 and {gameboard.size - 1}")
         except CustomError:
-            if gameboard.player_type == "user":
+            if gameboard.player_type == "computer":
                 print("please select a co-ordinate that hasn't already been chosen")
-            else:
-                pass
+                
 
 ################################################################
 
 
 def calculate_score(turn, gameboard):
     """
-    calculates the score after feeding it the turn and the board as perameters
+    calculates the score after feeding it the turn and the board as parameters
     """
     if turn == "Hit":
         if gameboard.player_type == "user":
