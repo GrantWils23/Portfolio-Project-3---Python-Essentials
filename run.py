@@ -168,10 +168,7 @@ def playgame(players_board, computers_board):
         print(f"Shot fired!, target '{players_turn}' at co-ordinates{(x, y)}")
         print("-" * 65)
         print(f"It's now the {computers_board.player_name}'s turn to attack.")
-        # rand_x = int(random_number(players_board.size))
-        # rand_y = int(random_number(players_board.size))
         computers_turn, x, y = validate_input_coordinates(players_board)
-        # computers_turn = make_guess(players_board, rand_x, rand_y)
         print(f"Shot fired!, target '{computers_turn}' at co-ordinates{(x, y)}")
         print()
 
@@ -194,6 +191,12 @@ def playgame(players_board, computers_board):
         print(f"Congratulations {players_board.player_name}! You won!")
     else:
         print("Unlucky, The computer beat you this time!")
+
+    play_again = str(input("Would you like to play again? press any key to continue or 'n' to quit: \n"))
+    if play_again != "n":
+        scores.pop(players_board.player_name)
+        start_game()
+    
 
 
 #------------------------------------------------------------------------------------------------------
