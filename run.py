@@ -3,10 +3,23 @@ import random
 scores = {"computer": 0}
 
 
-class CustomError(Exception):
+class AlreadyGuessedError(Exception):
     """
     This error is raised when the guesses list is being check against the
     new given guess coordinates
+    """
+
+
+class OutOfRangeError(Exception):
+    """
+    This error is raised when the co-ordinate guessed is out of range
+    of the size of the board
+    """
+
+
+class TooSmallValueError(Exception):
+    """
+    This error is raised when the co-ordinate guessed is less than 0
     """
 
 
@@ -48,7 +61,7 @@ class GameBoard():
 
 def random_number(boardsize):
     """
-    helper function that creates a random interger based on the boardsize
+    Helper function that creates a random interger based on the boardsize
     """
     return int(random.randint(0, boardsize - 1))
 
@@ -76,8 +89,7 @@ def input_coordinate(boardsize, row_or_column):
     """
     input a coordinate
     """
-    num = int(input(f'Enter a number between 0 and {boardsize - 1} \
-        for the {row_or_column}:  \n'))
+    num = int(input(f'Enter a number between 0 and {boardsize - 1} for the {row_or_column}:  \n'))
     return num
 
 
@@ -90,15 +102,31 @@ def make_guess(gameboard, x, y):
 
 def validate_input(gameboard, row_or_column):
     """
-    Validate the input co-ordinate given to make sure that it is not a string.
+    Validate the input co-ordinate given to make sure that the input
+    provided is valid to the dimensions of the board and that it is an
+    interger
     """
     while True:
         try:
             num = input_coordinate(gameboard.size, row_or_column)
-            return int(num)
+            if num > gameboard.size:
+                raise OutOfRangeError
+            elif num < 0:
+                raise TooSmallValueError
+            return num
         except ValueError as error:
             e = str(error).split()
-            print(f'{e[-1]} is not a number')
+            print(f'{e[-1]} is not a valid input')
+        except OutOfRangeError:
+            print("The number provided is out of range")
+        except TooSmallValueError:
+            print("The number chosen has to be greater than 0")
+
+
+def validate_name_input():
+    """
+    Validates the name of the player to make sure there is no whitespace
+    """
 
 
 def validate_input_coordinates(gameboard):
@@ -113,20 +141,16 @@ def validate_input_coordinates(gameboard):
                 x = validate_input(gameboard, "row")
                 y = validate_input(gameboard, "column")
                 if (x, y) in gameboard.guesses:
-                    raise CustomError
+                    raise AlreadyGuessedError
             else:
                 x = int(random_number(gameboard.size))
                 y = int(random_number(gameboard.size))
                 if (x, y) in gameboard.guesses:
-                    raise CustomError
+                    raise AlreadyGuessedError
             return make_guess(gameboard, x, y), x, y
-        except IndexError:
-            print(f" Index values provided are out of range, please select \
-                numbers between 0 and {gameboard.size - 1}")
-        except CustomError:
+        except AlreadyGuessedError:
             if gameboard.player_type == "computer":
-                print("please select a co-ordinate that hasn't already \
-                    been chosen")
+                print("please select a co-ordinate that hasn't already been chosen")
 
 
 def calculate_score(turn, gameboard):
@@ -152,7 +176,7 @@ def playgame(players_board, computers_board):
     """
     while scores["computer"] or scores[players_board.player_name] <= 4:
         print(f"{players_board.player_name}. It is your turn to attack!")
-        print("Prepare to enter the grid co-ordinates to strike.")
+        print("Prepare to enter the grid co-ordinates you would like) to strike.")
         print("-" * 65)
         players_turn, x, y = validate_input_coordinates(computers_board)
         print("-" * 65)
@@ -160,8 +184,7 @@ def playgame(players_board, computers_board):
         print("-" * 65)
         print(f"It's now the {computers_board.player_name}'s turn to attack.")
         computers_turn, x, y = validate_input_coordinates(players_board)
-        print(f"Shot fired!, \
-             target '{computers_turn}' at co-ordinates{(x, y)}")
+        print(f"Shot fired!, target '{computers_turn}' at co-ordinates{(x, y)}")
         print()
 
         print(f"{players_board.player_name}'s Battleship Board")
@@ -184,8 +207,7 @@ def playgame(players_board, computers_board):
     else:
         print("Unlucky, The computer beat you this time!")
 
-    play_again = str(input("Would you like to play again? press any key to \
-        continue or 'n' to quit: \n"))
+    play_again = str(input("Would you like to play again? press any key to continue or 'n' to quit: \n"))
     if play_again != "n":
         scores.pop(players_board.player_name)
         start_game()
@@ -230,8 +252,8 @@ def start_game():
 
 print()
 print("-" * 65)
-print("Welcome to the BATTLESHIPS! This is turn-based stratergy game")
-print("were the players take turns guessing co-ordinates on a grid to")
+print("Welcome to BATTLESHIPS! This is turn-based stratergy game were")
+print("the players take turns guessing co-ordinates on a grid to")
 print("shoot and take out your opponents ships before they take out")
 print("yours. The first one to take out all of each others ships wins!")
 print("-" * 65)
