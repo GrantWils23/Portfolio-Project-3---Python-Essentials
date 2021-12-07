@@ -1,6 +1,3 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
 import random
 
 scores = {"computer": 0}
@@ -58,8 +55,8 @@ def random_number(boardsize):
 
 def add_ships_to_board(gameboard):
     """
-    This function generates the random location of ships to the board. it takes the
-    players_board and computers_board as the arguments
+    This function generates the random location of ships to the board.
+    It takes the players_board and computers_board as the arguments
     """
     num_of_ships = gameboard.num_of_ships
     ship_list = []
@@ -79,13 +76,14 @@ def input_coordinate(boardsize, row_or_column):
     """
     input a coordinate
     """
-    num = int(input(f'Enter a number between 0 and {boardsize - 1} for the {row_or_column}:  \n'))
+    num = int(input(f'Enter a number between 0 and {boardsize - 1} \
+        for the {row_or_column}:  \n'))
     return num
 
 
 def make_guess(gameboard, x, y):
     """
-    prompt the user to make a guess that is stored in the player.guesses list
+    Prompt the user to make a guess that is stored in the player.guesses list
     """
     return gameboard.guess(x, y)
 
@@ -123,10 +121,12 @@ def validate_input_coordinates(gameboard):
                     raise CustomError
             return make_guess(gameboard, x, y), x, y
         except IndexError:
-            print(f" Index values provided are out of range, please select numbers between 0 and {gameboard.size - 1}")
+            print(f" Index values provided are out of range, please select \
+                numbers between 0 and {gameboard.size - 1}")
         except CustomError:
             if gameboard.player_type == "computer":
-                print("please select a co-ordinate that hasn't already been chosen")
+                print("please select a co-ordinate that hasn't already \
+                    been chosen")
 
 
 def calculate_score(turn, gameboard):
@@ -144,9 +144,12 @@ def calculate_score(turn, gameboard):
 
 def playgame(players_board, computers_board):
     """
-     this function takes the player and the computer players as parameters
-     and calls the functions to make guesses in the game until there is a winner
-     """
+    This function takes the player and the computer players as parameters
+    and calls the functions to make guesses in the game until there is
+    a winner. The function is carries a lot of the weight of the program.
+    core concept to remember is that the guesses of a player are stored in
+    the other gameboard guesses.
+    """
     while scores["computer"] or scores[players_board.player_name] <= 4:
         print(f"{players_board.player_name}. It is your turn to attack!")
         print("Prepare to enter the grid co-ordinates to strike.")
@@ -157,7 +160,8 @@ def playgame(players_board, computers_board):
         print("-" * 65)
         print(f"It's now the {computers_board.player_name}'s turn to attack.")
         computers_turn, x, y = validate_input_coordinates(players_board)
-        print(f"Shot fired!, target '{computers_turn}' at co-ordinates{(x, y)}")
+        print(f"Shot fired!, \
+             target '{computers_turn}' at co-ordinates{(x, y)}")
         print()
 
         print(f"{players_board.player_name}'s Battleship Board")
@@ -180,12 +184,12 @@ def playgame(players_board, computers_board):
     else:
         print("Unlucky, The computer beat you this time!")
 
-    play_again = str(input("Would you like to play again? press any key to continue or 'n' to quit: \n"))
+    play_again = str(input("Would you like to play again? press any key to \
+        continue or 'n' to quit: \n"))
     if play_again != "n":
         scores.pop(players_board.player_name)
         start_game()
-    
-#--------------------------------------------------------------------------------------------------------------------------------------
+
 
 def start_game():
     """
