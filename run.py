@@ -6,20 +6,32 @@ scores = {"computer": 0}
 class AlreadyGuessedError(Exception):
     """
     This error is raised when the guesses list is being check against the
-    new given guess coordinates
+    new given guess coordinates.
     """
 
 
 class OutOfRangeError(Exception):
     """
     This error is raised when the co-ordinate guessed is out of range
-    of the size of the board
+    of the size of the board.
     """
 
 
 class TooSmallValueError(Exception):
     """
-    This error is raised when the co-ordinate guessed is less than 0
+    This error is raised when the co-ordinate guessed is less than 0.
+    """
+
+
+class WhiteSpaceError(Exception):
+    """
+    This error is raised when the input consists any whitespace in the name.
+    """
+
+
+class NoNameEnteredError(Exception):
+    """
+    This error is raised when the input doesn't have any value inside the name.
     """
 
 
@@ -89,7 +101,8 @@ def input_coordinate(boardsize, row_or_column):
     """
     input a coordinate
     """
-    num = int(input(f'Enter a number between 0 and {boardsize - 1} for the {row_or_column}:  \n'))
+    text_a = ("Enter a number between 0 and ")
+    num = int(input(text_a + f'{boardsize - 1} for the {row_or_column}: \n'))
     return num
 
 
@@ -127,6 +140,20 @@ def validate_name_input():
     """
     Validates the name of the player to make sure there is no whitespace
     """
+    while True:
+        try:
+            name = str(input("What is your name? \n"))
+            if " " in name:
+                raise WhiteSpaceError
+            if len(name) == 0:
+                raise NoNameEnteredError
+            return name
+        except WhiteSpaceError:
+            print("Please enter a name with no spaces")
+        except NoNameEnteredError:
+            text_a = ("You have to enter some form of name, be it a number")
+            text_b = (", special character or one letter to play this game")
+            print(text_a + text_b)
 
 
 def validate_input_coordinates(gameboard):
@@ -150,7 +177,9 @@ def validate_input_coordinates(gameboard):
             return make_guess(gameboard, x, y), x, y
         except AlreadyGuessedError:
             if gameboard.player_type == "computer":
-                print("please select a co-ordinate that hasn't already been chosen")
+                text_a = ("please select a co-ordinate that ")
+                text_b = ("hasn't already been chosen")
+                print(text_a + text_b)
 
 
 def calculate_score(turn, gameboard):
@@ -164,8 +193,6 @@ def calculate_score(turn, gameboard):
         else:
             scores["computer"] += 1
             return scores
-    # else:
-        # return scores
 
 
 def playgame(players_board, computers_board):
@@ -178,17 +205,28 @@ def playgame(players_board, computers_board):
     """
     while scores["computer"] or scores[players_board.player_name] <= 4:
         print(f"{players_board.player_name}. It is your turn to attack!")
-        print("Prepare to enter the grid co-ordinates you would like to strike.")
+        print("Prepare to enter the co-ordinates you would like to strike.")
         print("-" * 65)
         players_turn, x, y = validate_input_coordinates(computers_board)
+
         print("-" * 65)
-        print(f"Shot fired!, target '{players_turn}' at co-ordinates{(x, y)}")
+        print(f"Shot fired!, target '{players_turn}' at co-ordinate{(x, y)}")
+        calculate_score(players_turn, players_board)
+        if (scores[players_board.player_name] == 4):
+            print()
+            break
+
         print("-" * 65)
         print(f"It's now the {computers_board.player_name}'s turn to attack.")
         computers_turn, x, y = validate_input_coordinates(players_board)
-        print(f"Shot fired!, target '{computers_turn}' at co-ordinates{(x, y)}")
-        print()
+        print("-" * 65)
+        calculate_score(computers_turn, computers_board)
+        print(f"Shot fired!, target '{computers_turn}' at co-ordinate{(x, y)}")
+        if (scores["computer"] == 4):
+            print()
+            break
 
+        print()
         print(f"{players_board.player_name}'s Battleship Board")
         print("-" * 40)
         players_board.display_board()
@@ -197,19 +235,27 @@ def playgame(players_board, computers_board):
         computers_board.display_board()
         print()
 
-        calculate_score(players_turn, players_board)
-        calculate_score(computers_turn, computers_board)
         print("The scores at the end of the round are:")
         print(scores)
         print()
-        if (scores[players_board.player_name] == 4) or (scores["computer"] == 4):
-            break
+
+    print(f"{players_board.player_name}'s Battleship Board")
+    print("-" * 40)
+    players_board.display_board()
+    print(f"{computers_board.player_name}'s Battleship Board")
+    print("-" * 40)
+    computers_board.display_board()
+    print()
+    print("The scores at the end of the game are:")
+    print(scores)
     if scores[players_board.player_name] == 4:
         print(f"Congratulations {players_board.player_name}! You won!")
     else:
         print("Unlucky, The computer beat you this time!")
 
-    play_again = str(input("Would you like to play again? press any key to continue or 'n' to quit: \n"))
+    text_a = ("Would you like to play again?")
+    text_b = ("press any key to continue or 'n' to quit:")
+    play_again = str(input(text_a + text_b + " \n"))
     if play_again != "n":
         scores.pop(players_board.player_name)
         start_game()
@@ -220,18 +266,18 @@ def start_game():
     runs the game and instatiates all the variables required to run the game
     """
 
-    board_size = 5
-    num_of_ships = 4
-    players_name = input("What is your name? \n")
+    boardsize = 5
+    ships = 4
+    players_name = validate_name_input()
     scores["computer"] = 0
     scores[players_name] = 0
-    players_board = GameBoard(board_size, num_of_ships, player_type="user", player_name=players_name)
-    computers_board = GameBoard(board_size, num_of_ships, player_type="computer", player_name="Computer")
+    players_board = GameBoard(boardsize, ships, "user", players_name)
+    computers_board = GameBoard(boardsize, ships, "computer", "Computer")
 
     print()
     print("*" * 40)
-    print("Welcome to the BattleShips board!")
-    print(f"The Boardsize: {board_size}, The number of ships: {num_of_ships}")
+    print("Welcome to the BattleShips Board!")
+    print(f"The Board size: {boardsize}, The number of ships: {ships}")
     print("The top left grid co-ordinate is (0, 0)")
     print("*" * 40)
 
