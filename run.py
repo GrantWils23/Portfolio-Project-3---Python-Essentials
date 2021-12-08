@@ -109,7 +109,7 @@ def validate_input(gameboard, row_or_column):
     while True:
         try:
             num = input_coordinate(gameboard.size, row_or_column)
-            if num > gameboard.size:
+            if num > gameboard.size - 1:
                 raise OutOfRangeError
             elif num < 0:
                 raise TooSmallValueError
@@ -164,6 +164,8 @@ def calculate_score(turn, gameboard):
         else:
             scores["computer"] += 1
             return scores
+    # else:
+        # return scores
 
 
 def playgame(players_board, computers_board):
@@ -176,7 +178,7 @@ def playgame(players_board, computers_board):
     """
     while scores["computer"] or scores[players_board.player_name] <= 4:
         print(f"{players_board.player_name}. It is your turn to attack!")
-        print("Prepare to enter the grid co-ordinates you would like) to strike.")
+        print("Prepare to enter the grid co-ordinates you would like to strike.")
         print("-" * 65)
         players_turn, x, y = validate_input_coordinates(computers_board)
         print("-" * 65)

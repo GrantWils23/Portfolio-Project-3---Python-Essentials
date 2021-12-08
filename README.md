@@ -40,7 +40,7 @@ Happy coding!
 <p>This project is a battleships game that is run and played within the terminal. The system runs on a mock terminal through <a href="https://www.heroku.com/" target="_blank">Heroku</a>
 The aim of the game is to destroy the computers battleships by guessing where on a grid their battleships are and firing upon them before the computer finds and destroys all yours first.</p>
 
-click here to play the game: <a href="-----">Battleship Game</a>
+click here to play the game: <a href="https://terminal-battleships-game.herokuapp.com/" target="_blank">Battleship Game</a>
 <br><br>
 
 ![image](________)
