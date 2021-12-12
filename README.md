@@ -78,12 +78,18 @@ The game generates the ships for the game randomly.
 </ul>
 <li>Input Validation and checking</li>
 <ul>
-    <li>You cannot enter letters or floats or negative numbers as inputs</li>
-    <li>You cannot input values greater than the size of the board</li>
-    <li>You cannot enter co-ordinates that have already been guessed before</li>
+    <li>You cannot enter letters or floats or negative numbers as inputs.</li>
+    <li>You cannot input values greater than the size of the board.</li>
+    <li>You cannot enter co-ordinates that have already been guessed before.</li>
 </ul>
 
 ![image](https://user-images.githubusercontent.com/72948843/145610133-06fb4731-4858-4465-9e75-438c6909279c.png)
+
+<li>Turn counter</li>
+<ul>
+    <li>The turn counter returns the ammount of shots fired to win the game at the end of the game.</li>
+    <li>It returns a positve feedback message to the player based on how well you performed based on the ammount of shots fired.</li>
+</ul>
 
 <li>The data is maintained in class instances</li>
 <br>
@@ -95,7 +101,6 @@ The game generates the ships for the game randomly.
 <li>Have ships larger that 1 x 1 appear on the grid.</li>
 <li>Allow the players to select the size of the board and how many battleships there can be.</li>
 <li>Allow the player to position the ships themselves.</li>
-<li>Have a turn counter. how many goes it took for the player to win.</li>
 <li>To create a time delay between text display and shoots fired by the computer's turn to create a better flow to the game.</li>
 <br>
 
@@ -113,7 +118,7 @@ To test my project, I have manually tested the project by doing the following:
         Tested the validations to prove the program is working correctly by entering invalid inputs and checking that all error types are accounted for (outside size of board parameters, same input cannot be inputted twice and strings are not excepted)
     </li>
     <li>
-        Tested in the local terminal and the Code institute Heroku Terminal
+        Tested in the local terminal and the Code institute Heroku Terminal.
     </li>
 </ul>
 
@@ -146,9 +151,9 @@ To test my project, I have manually tested the project by doing the following:
 ## Technologies Used
 
 <li><a href="https://github.com/" target="_blank">GitHub</a> - The site was used to edit and host the website.</li>
-<li><a href="https://gitpod.io/projects" target="_blank">GitPod</a> - Used in the deployment and creating the website</li>
-<li><a href="https://www.python.org/" target="_blank">Python</a> - This was used in the production to get the game running as it is required for the app to run</li>
-<li><a href="https://nodejs.org/en/" target="_blank">Node.js</a> - This was used in the production to get the game running as it is required for app to run</li>
+<li><a href="https://gitpod.io/projects" target="_blank">GitPod</a> - Used in the deployment and creating the website.</li>
+<li><a href="https://www.python.org/" target="_blank">Python</a> - This was used in the production to get the game running as it is required for the app to run.</li>
+<li><a href="https://nodejs.org/en/" target="_blank">Node.js</a> - This was used in the production to get the game running as it is required for app to run.</li>
 <li><a href="http://pep8online.com/" target="_blank">pep8online</a> - This site was used to validate the python code to check for any errors within my writing.</li>
 <li><a href="https://www.heroku.com/" target="_blank">Heroku</a> - This was used to deploy the game in a mock terminal that allows anyone to play the game online.</li>
 <li><a href="https://docs.python.org/3/library/random.html" target="_blank">Python Libary Random</a> - This was used to generate random numbers within the games code for deployment of the ships or the computers random guesses.</li>

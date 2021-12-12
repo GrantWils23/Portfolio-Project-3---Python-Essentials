@@ -41,7 +41,7 @@ class GameBoard():
     Class you can set the size of the board, the number of ships, the board
     player (computer or user)
     """
-    def __init__(self, size, num_of_ships, player_type, player_name):
+    def __init__(self, size, num_of_ships, player_type, player_name, turns):
         self.size = size
         self.board_grid = [["." for x in range(size)] for y in range(size)]
         self.num_of_ships = num_of_ships
@@ -49,6 +49,7 @@ class GameBoard():
         self.player_name = player_name
         self.guesses = []
         self.ships = []
+        self.turns = turns
 
     def display_board(self):
         for row in self.board_grid:
@@ -57,6 +58,7 @@ class GameBoard():
     def guess(self, x, y):
         self.guesses.append((x, y))
         self.board_grid[x][y] = "X"
+        self.turns += 1
 
         if (x, y) in self.ships:
             self.board_grid[x][y] = "@"
@@ -108,7 +110,8 @@ def input_coordinate(boardsize, row_or_column):
 
 def make_guess(gameboard, x, y):
     """
-    Prompt the user to make a guess that is stored in the player.guesses list
+    Prompt the user to make a guess that is stored in the
+    player.guesses list and returns the co-ordinates
     """
     return gameboard.guess(x, y)
 
@@ -195,6 +198,36 @@ def calculate_score(turn, gameboard):
             return scores
 
 
+def shots_fired_counter(gameboard):
+    """
+    calculates the ammount of turns it takes for the player to win
+    the game.
+    """
+    turns = gameboard.turns
+    print()
+    print("-" * 40)
+    print("All targets were located, and destroyed. Well played soldier!")
+    print(f"You fired {turns} shots to abliterate the enemy boats.")
+    print()
+    if int(turns) < 5:
+        print("WOW!")
+        print("Amazing accuracy, you have a keen aim and waste no shells!")
+        print("You should get a medal of honor for your heroics!")
+    elif int(turns) < 10:
+        print("That is an impressive display. Your shots hit true!")
+        print("Keep up that great work soldier!")
+    elif int(turns) < 15:
+        print("Good work and well fought, that was a tough battle!")
+        print("You came out on top and showed them who is boss!")
+    elif int(turns) < 20:
+        print("Well done, you downed your opponent in less than 20 shots")
+        print("That is a respectable score! Good work!")
+    else:
+        print("That was a really slog of a battle!")
+        print("That was done to the wire, well done for coming out on top!")
+    print("-" * 40)
+
+
 def board_display(players_board, computers_board):
     """
     board display function is a helper function that consolidates a
@@ -248,15 +281,18 @@ def playgame(players_board, computers_board):
         print()
 
     board_display(players_board, computers_board)
-    print("The scores at the end of the game are:")
-    print(scores)
     if scores[players_board.player_name] == 4:
         print(f"Congratulations {players_board.player_name}! You won!")
+        shots_fired_counter(computers_board)
     else:
         print("Unlucky, The computer beat you this time!")
+    print()
+    print("The scores at the end of the game are:")
+    print(scores)
+    print()
 
-    text_a = ("Would you like to play again?")
-    text_b = ("press any key to continue or 'n' to quit:")
+    text_a = ("Would you like to play again? ")
+    text_b = ("Press any key to continue or 'n' to quit:")
     play_again = str(input(text_a + text_b + " \n"))
     if play_again != "n":
         scores.pop(players_board.player_name)
@@ -273,8 +309,9 @@ def start_game():
     players_name = validate_name_input()
     scores["computer"] = 0
     scores[players_name] = 0
-    players_board = GameBoard(boardsize, ships, "user", players_name)
-    computers_board = GameBoard(boardsize, ships, "computer", "Computer")
+    turns = 0
+    players_board = GameBoard(boardsize, ships, "user", players_name, turns)
+    comptr_board = GameBoard(boardsize, ships, "computer", "Computer", turns)
 
     print()
     print("*" * 40)
@@ -284,10 +321,10 @@ def start_game():
     print("*" * 40)
 
     add_ships_to_board(players_board)
-    add_ships_to_board(computers_board)
+    add_ships_to_board(comptr_board)
 
-    board_display(players_board, computers_board)
-    playgame(players_board, computers_board)
+    board_display(players_board, comptr_board)
+    playgame(players_board, comptr_board)
 
 
 print()
