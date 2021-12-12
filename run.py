@@ -195,6 +195,22 @@ def calculate_score(turn, gameboard):
             return scores
 
 
+def board_display(players_board, computers_board):
+    """
+    board display function is a helper function that consolidates a
+    repeatable piece of code that is used in the game.
+    """
+    print()
+    print(f"{players_board.player_name}'s Battleship Board")
+    print("-" * 40)
+    players_board.display_board()
+    print()
+    print(f"{computers_board.player_name}'s Battleship Board")
+    print("-" * 40)
+    computers_board.display_board()
+    print()
+
+
 def playgame(players_board, computers_board):
     """
     This function takes the player and the computer players as parameters
@@ -226,26 +242,12 @@ def playgame(players_board, computers_board):
             print()
             break
 
-        print()
-        print(f"{players_board.player_name}'s Battleship Board")
-        print("-" * 40)
-        players_board.display_board()
-        print(f"{computers_board.player_name}'s Battleship Board")
-        print("-" * 40)
-        computers_board.display_board()
-        print()
-
+        board_display(players_board, computers_board)
         print("The scores at the end of the round are:")
         print(scores)
         print()
 
-    print(f"{players_board.player_name}'s Battleship Board")
-    print("-" * 40)
-    players_board.display_board()
-    print(f"{computers_board.player_name}'s Battleship Board")
-    print("-" * 40)
-    computers_board.display_board()
-    print()
+    board_display(players_board, computers_board)
     print("The scores at the end of the game are:")
     print(scores)
     if scores[players_board.player_name] == 4:
@@ -284,17 +286,7 @@ def start_game():
     add_ships_to_board(players_board)
     add_ships_to_board(computers_board)
 
-    print()
-    print(f"{players_board.player_name}'s Battleship Board")
-    print("-" * 40)
-    print()
-    players_board.display_board()
-    print()
-    print(f"{computers_board.player_name}'s Battleship Board")
-    print("-" * 40)
-    computers_board.display_board()
-    print()
-
+    board_display(players_board, computers_board)
     playgame(players_board, computers_board)
 
 
