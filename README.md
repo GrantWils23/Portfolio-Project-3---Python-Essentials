@@ -17,7 +17,7 @@ click here to play the game: <a href="https://terminal-battleships-game.herokuap
 * [**Features**](<#features>)
     * [Existing Features](<#Existing-Features>)
     * [Future Features](<#Future-features>)
-* [**Data Model](<#Data-Model>)
+* [**Data Model**](<#Data-Model>)
 * [**Testing**](<#testing>)
     * [Bugs](<#bugs>)
     * [Solved Bugs](<#solved-bugs>)
@@ -134,7 +134,6 @@ To test my project, I have manually tested the project by doing the following:
 <ul>
     <li>I created a validation for checking if the guess made ca be found in the guesses but I didnt pass this validation into the code for the computers turn. This showed up that the
     computer was hitting targets it has already shot and missed. resulting in an unbalanced and unfair game experience wereby the user can have a greater chance at winning then the computer</li>
-    <li>........</li>
 </ul>
 
 [Back to Top](<#contents>)
