@@ -39,7 +39,7 @@ The game will generate a random board with the battleships placed for both the c
 
 The player will be able to see their ships marked with a '$' sign on their board whilst the other board will computer's pieces will remain hidden from the human user.
 
-Hit ships will be marked with a 'X' whilse missed targets will show a '@'.
+Hit ships will be marked with a '@' whilst missed targets will show a 'X'.
 
 The user and the player both take turns to hit one anothers ships by taking guesses to where they are on the board by giving a grid coordanate that fits the board size.
 
@@ -99,7 +99,10 @@ The game generates the ships for the game randomly.
 
 ## Data Model
 
-Here you can find the logical flow chart that I made to help me create the game. <a href="https://github.com/GrantWils23/Portfolio-Project-3---Python-Essentials/blob/main/assets/Battleships%20Flow%20Chart.pdf" target="_blank">Battleships Flow Diagram</a>. This was really useful in helping me understand the flow and direction on where to take the game and how I should look to create the game.
+Here you can find the logical flow chart that I made to help me create the game. <a href="https://githu -b.com/GrantWils23/Portfolio-Project-3---Python-Essentials/blob/main/assets/Battleships%20Flow%20Chart.pdf" target="_blank">Battleships Flow Diagram</a>. This was really useful in helping me understand the flow and direction on where to take the game and how I should look to create the game.
+<br>
+
+[Back to Top](<#contents>)
 
 ### Features left to implement
 
@@ -216,6 +219,8 @@ To test my project, I have manually tested the project by doing the following:
 # Credits
 
 <p>I would like to say a small thanks to the Code institute for the first bit of help on how to setup the game and create objects models that have real value and functionality from their introduction video as it gave a good starting point on how to logically approach designing the game.</p>
+
+[Back to Top](<#contents>)
 
 ## Acknowledgements
 
