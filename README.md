@@ -26,6 +26,7 @@ click here to play the game: <a href="https://terminal-battleships-game.herokuap
 * [**Deployment**](<#deployment>)
     * [Deployment of the project](<#deployment-of-the-project>)
     * [Cloning of the project](<#cloning-of-the-project>)
+* [Credits](<#Credits>)
 * [**Acknowledgements**](<#acknowledgements>)
 
 
@@ -96,6 +97,10 @@ The game generates the ships for the game randomly.
     
 [Back to Top](<#contents>)
 
+## Data Model
+
+Here you can find the logical flow chart that I made to help me create the game. <a href="https://github.com/GrantWils23/Portfolio-Project-3---Python-Essentials/blob/main/assets/Battleships%20Flow%20Chart.pdf" target="_blank">Battleships Flow Diagram</a>. This was really useful in helping me understand the flow and direction on where to take the game and how I should look to create the game.
+
 ### Features left to implement
 
 <li>Have ships larger that 1 x 1 appear on the grid.</li>
@@ -133,7 +138,7 @@ To test my project, I have manually tested the project by doing the following:
 
 <ul>
     <li>I created a validation for checking if the guess made ca be found in the guesses but I didnt pass this validation into the code for the computers turn. This showed up that the
-    computer was hitting targets it has already shot and missed. resulting in an unbalanced and unfair game experience wereby the user can have a greater chance at winning then the computer</li>
+    computer was hitting targets it has already shot and missed. resulting in an unbalanced and unfair game experience wereby the user can have a greater chance at winning then the computer.</li>
 </ul>
 
 [Back to Top](<#contents>)
@@ -207,6 +212,10 @@ To test my project, I have manually tested the project by doing the following:
 
 [Back to Top](<#contents>)
 <br>
+
+# Credits
+
+<p>I would like to say a small thanks to the Code institute for the first bit of help on how to setup the game and create objects models that have real value and functionality from their introduction video as it gave a good starting point on how to logically approach designing the game.</p>
 
 ## Acknowledgements
 
