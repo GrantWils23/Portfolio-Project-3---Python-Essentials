@@ -115,7 +115,7 @@ To test my project, I have manually tested the project by doing the following:
         Testing the programs code in <a href="http://pep8online.com/" target="_blank">pep8online</a> and confirmed that there were no errors with the code.
     </li>
     <li>
-        Tested the validations to prove the program is working correctly by entering invalid inputs and checking that all error types are accounted for (outside size of board parameters, same input cannot be inputted twice and strings are not excepted)
+        Tested the validations to prove the program is working correctly by entering invalid inputs and checking that all error types are accounted for (outside size of board parameters, same input cannot be inputted twice and strings are not excepted).
     </li>
     <li>
         Tested in the local terminal and the Code institute Heroku Terminal.

@@ -223,8 +223,8 @@ def shots_fired_counter(gameboard):
         print("Well done, you downed your opponent in less than 20 shots")
         print("That is a respectable score! Good work!")
     else:
-        print("That was a really slog of a battle!")
-        print("That was done to the wire, well done for coming out on top!")
+        print("That was a real slog of a battle!")
+        print("That was down to the wire, well done for coming out on top!")
     print("-" * 40)
 
 
